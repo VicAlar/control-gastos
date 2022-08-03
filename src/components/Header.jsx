@@ -1,11 +1,22 @@
-import React from 'react';
+import React from "react";
+import NuevoPresupuesto from "./NuevoPresupuesto";
+import ControlPresupuesto from "./ControlPresupuesto";
 
-const Header = () => {
-    return (
-        <div>
-            Desde el Header
-        </div>
-    );
+const Header = ({ setPresupuesto, presupuesto, isValid, setIsValid }) => {
+  return (
+    <header>
+      <h1>Planificador de Gastos</h1>
+      {isValid ? (
+        <ControlPresupuesto presupuesto={presupuesto} />
+      ) : (
+        <NuevoPresupuesto
+          presupuesto={presupuesto}
+          setPresupuesto={setPresupuesto}
+          setIsValid={setIsValid}
+        />
+      )}
+    </header>
+  );
 };
 
 export default Header;
