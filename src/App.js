@@ -20,6 +20,7 @@ function App() {
     }, 500);
   };
 
+  //Función para guardar gastos
   const guardarGasto = (gasto) => {
     gasto.id = generarId();
     gasto.fecha = formatFecha(Date.now());
