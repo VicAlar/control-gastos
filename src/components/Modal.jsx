@@ -1,15 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CerrarModal from "../img/cerrar.svg";
 import Mensaje from "./Mensaje";
 
-const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
+const Modal = ({
+  setModal,
+  animarModal,
+  setAnimarModal,
+  guardarGasto,
+  gastoEditar,
+  setGastoEditar,
+}) => {
   const [nombre, setNombre] = useState("");
-  const [cantidad, setCantidad] = useState(0);
+  const [cantidad, setCantidad] = useState("");
   const [categoria, setCategoria] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [id, setId] = useState("");
+  const [fecha, setFecha] = useState("");
 
+  //Obtener el gasto a editar y pasar valores a los inputs
+  useEffect(() => {
+    if (Object.keys(gastoEditar).length > 0) {
+      setNombre(gastoEditar.nombre);
+      setCantidad(gastoEditar.cantidad);
+      setCategoria(gastoEditar.categoria);
+      setId(gastoEditar.id);
+      setFecha(gastoEditar.fecha);
+    }
+  }, [gastoEditar]);
+
+  // Función para cerrar el modal
   const ocultarModal = () => {
     setAnimarModal(false);
+    setGastoEditar({});
     setTimeout(() => {
       setModal(false);
     }, 500);
@@ -18,6 +40,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    //Validación
     if ([nombre, cantidad, categoria].includes("")) {
       setMensaje("Todos los campos son obligatorios");
 
@@ -25,7 +48,10 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
         setMensaje("");
       }, 3000);
     }
-    guardarGasto({ nombre, cantidad, categoria });
+
+    //Nuevo Gasto
+    guardarGasto({ nombre, cantidad, categoria, id, fecha });
+    ocultarModal();
   };
   return (
     <div className="modal">
@@ -36,7 +62,11 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
         className={`formulario ${animarModal ? "animar" : "cerrar"}`}
         onSubmit={handleSubmit}
       >
-        <legend>Nuevo Gasto</legend>
+        {Object.keys(gastoEditar).length > 0 ? (
+          <legend>Editar Gasto</legend>
+        ) : (
+          <legend>Nuevo Gasto</legend>
+        )}
         <div className="campo">
           {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
           <label htmlFor="nombre">Nombre Gasto</label>
@@ -78,7 +108,14 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
             <option value="suscripciones">Suscripciones</option>
           </select>
         </div>
-        <input type="submit" value="Añadir Gasto" />
+        <input
+          type="submit"
+          value={
+            Object.keys(gastoEditar).length > 0
+              ? "Guardar Cambios"
+              : "Crear Gasto"
+          }
+        />
       </form>
     </div>
   );

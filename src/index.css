@@ -156,7 +156,7 @@ header h1 {
 }
 .contenedor-presupuesto {
     margin-top: -5rem;
-
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -208,12 +208,20 @@ header h1 {
 }
 .contenido-presupuesto p.negativo,
 .contenido-presupuesto p.negativo span {
-    color: red;
+    color: #ad1515;
 }
 .contenido-presupuesto span {
     font-weight: 900;
     color: var(--azul);
 }
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
 .reset-app {
     border: none;
     background-color: #db2777;
