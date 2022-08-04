@@ -4,7 +4,7 @@ import Filtro from "./components/Filtro";
 import Modal from "./components/Modal";
 import ListadoGastos from "./components/ListadoGastos";
 import { generarId } from "./helpers";
-import IconoNuevoGasto from "./img/nuevo-gasto.svg";
+import IconoNuevoGasto from "./img/nuevo_gasto.svg";
 
 function App() {
   const [presupuesto, setPresupuesto] = useState(
